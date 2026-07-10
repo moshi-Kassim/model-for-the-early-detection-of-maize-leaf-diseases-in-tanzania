@@ -1,0 +1,22 @@
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+.env
+.venv/
+venv/
+
+# Streamlit / local runtime
+.streamlit/secrets.toml
+database/maize_diagnosis.db
+database/uploads/
+
+# Duplicate/large training artifacts (model shipped in model/)
+data/corn_disease_cnn.h5
+data/corn_disease_resnet50*.h5
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
