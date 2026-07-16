@@ -165,7 +165,7 @@ def _symptoms_match_prediction(
     if predicted_class == "Blight":
         return lesion_ratio >= 0.25
     if predicted_class == "Gray_Leaf_Spot":
-        return lesion_ratio >= 0.08
+        return lesion_ratio >= 0.05
     return True
 
 
@@ -176,6 +176,23 @@ def _is_similar_grass_not_maize(features: dict, max_prob: float) -> bool:
         and features["other_plant_green_ratio"] >= 0.70
         and features["maize_healthy_hue_ratio"] < 0.05
         and features["maize_lesion_ratio"] < 0.06
+    )
+
+
+def _is_field_diseased_maize_photo(
+    features: dict, predicted_class: str, max_prob: float
+) -> bool:
+    """Accept real field maize photos when the model is highly confident of disease."""
+    if predicted_class not in ("Blight", "Gray_Leaf_Spot", "Common_Rust"):
+        return False
+
+    return (
+        max_prob >= 0.88
+        and features["foliage_ratio"] >= 0.65
+        and features["green_ratio"] >= 0.45
+        and features["maize_healthy_hue_ratio"] >= 0.15
+        and features["skin_ratio"] < 0.25
+        and features["fruit_ratio"] < 0.20
     )
 
 
@@ -215,6 +232,9 @@ def validate_maize_leaf(
         return False, _reject_other_plant_message()
 
     if _is_field_maize_photo(features, predicted_class, max_prob):
+        return True, ""
+
+    if _is_field_diseased_maize_photo(features, predicted_class, max_prob):
         return True, ""
 
     foliage_ratio = features["foliage_ratio"]

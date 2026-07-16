@@ -8,8 +8,14 @@ venv/
 
 # Streamlit / local runtime
 .streamlit/secrets.toml
+shared/
+data/community.db
+data/community_images/
 database/maize_diagnosis.db
 database/uploads/
+
+# Word temp lock files
+~$*.docx
 
 # Duplicate/large training artifacts (model shipped in model/)
 data/corn_disease_cnn.h5

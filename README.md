@@ -26,67 +26,56 @@ pip install -r requirements.txt
 
 ## Run the dashboard
 
-**Option 1 — Double-click (Windows):**
-```
-run.bat
-```
+There are **two separate apps**:
 
-**Option 2 — Command line:**
+| Dashboard | File | Port | For |
+|---|---|---|---|
+| **User Dashboard** | `user_app.py` | 8501 | Farmers — upload, top disease, management only |
+| **Admin Dashboard** | `app.py` | 8502 | Technical — detailed diagnosis, metrics, about |
+
+**User Dashboard (farmers):**
 ```bash
-cd "python dashboard"
-streamlit run app.py
+streamlit run user_app.py
 ```
+Or double-click `run_user.bat` / `run.bat`
 
-The app **auto-loads** the AI model and database on startup. Diagnosis runs **automatically** when you upload an image.
+**Admin Dashboard (technical):**
+```bash
+streamlit run app.py --server.port 8502
+```
+Or double-click `run_admin.bat`
 
-The app opens in your browser at `http://localhost:8501`.
+- User app: `http://localhost:8501`
+- Admin app: `http://localhost:8502`
+
+Both apps **auto-load** the AI model on startup. Diagnosis runs **automatically** when you upload an image.
 
 ## Usage
 
-1. Open the **Diagnose** page
-2. Upload a maize leaf image (JPG/PNG) or use a sample image
-3. View the predicted disease class and confidence score
-4. Check **Diagnosis History** for saved records in the database
+**User Dashboard**
+1. Upload a maize leaf image (JPG/PNG)
+2. View the detected disease and recommended management
 
-## Database
+**Admin Dashboard**
+1. Open **Diagnose** and upload a real maize leaf image for full probabilities and symptoms
+2. Open **Performance** for model evaluation metrics
+3. Open **About** for project information
 
-SQLite database stores every diagnosis attempt locally.
-
-```bash
-python database/init_db.py
-```
-
-**Table: `diagnoses`**
-
-| Column | Description |
-|---|---|
-| id | Auto-increment primary key |
-| created_at | UTC timestamp |
-| image_filename | Original file name |
-| image_path | Saved copy path (uploads only) |
-| predicted_class | Model class key |
-| display_name | Human-readable disease name |
-| confidence | Confidence score (%) |
-| status | `accepted` or `rejected` |
-| rejection_reason | Why upload was rejected |
-| probabilities_json | All class probabilities |
-| source | `upload` or `sample` |
-
-Database file: `database/maize_diagnosis.db`
+> For panel presentation, use **live uploads only** (no pre-loaded sample images). Sample files in `assets/sample_images/` are kept for local developer testing only.
 
 ## Project structure
 
 ```
 python dashboard/
-├── app.py                  # Streamlit dashboard
+├── user_app.py             # User dashboard (farmers)
+├── app.py                  # Admin dashboard (technical)
+├── run_user.bat            # Start user app (port 8501)
+├── run_admin.bat           # Start admin app (port 8502)
 ├── requirements.txt
+├── utils/
+│   └── dashboard_core.py   # Shared model and diagnosis logic
 ├── model/
 │   └── corn_disease_cnn.h5 # Trained Custom CNN (92.37% test accuracy)
-├── database/
-│   ├── db.py                  # SQLite operations
-│   ├── init_db.py             # Create database manually
-│   ├── maize_diagnosis.db     # Auto-created database file
-│   └── uploads/               # Saved uploaded images
 ├── assets/
 │   └── sample_images/      # Demo images per class
 └── data/                   # Notebooks, PDF, and original model files

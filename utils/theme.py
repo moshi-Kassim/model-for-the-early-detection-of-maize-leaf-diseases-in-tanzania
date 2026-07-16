@@ -31,6 +31,10 @@ CUSTOM_CSS = """
         padding-bottom: 1rem;
         margin-bottom: 1.75rem;
         position: relative;
+        padding-left: 1rem;
+        border-left: 4px solid #3d6b4f;
+        background: linear-gradient(90deg, rgba(61, 107, 79, 0.06) 0%, transparent 55%);
+        border-radius: 0 10px 10px 0;
     }
     .page-header::after {
         content: '';
@@ -50,7 +54,7 @@ CUSTOM_CSS = """
         font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
         font-size: 1.85rem;
         font-weight: 700;
-        color: #152515;
+        color: #1a3d2a;
         margin: 0 0 0.35rem 0;
         letter-spacing: -0.025em;
         line-height: 1.2;
@@ -64,8 +68,9 @@ CUSTOM_CSS = """
     }
 
     .panel {
-        background: #ffffff;
-        border: 1px solid #e4ebe4;
+        background: linear-gradient(180deg, #ffffff 0%, #f9fcf9 100%);
+        border: 1px solid #d5e8d5;
+        border-top: 3px solid #3d6b4f;
         border-radius: 10px;
         padding: 1.35rem 1.45rem;
         box-shadow:
@@ -175,9 +180,10 @@ CUSTOM_CSS = """
 
     .notice {
         font-size: 0.88rem;
-        color: #4b5563;
-        background: #f6f8f6;
-        border: 1px solid #e2ebe2;
+        color: #2d4a35;
+        background: linear-gradient(135deg, #f0f9f2 0%, #e8f5eb 100%);
+        border: 1px solid #c5dfc9;
+        border-left: 4px solid #3d6b4f;
         border-radius: 8px;
         padding: 0.8rem 1rem;
         line-height: 1.5;
@@ -200,6 +206,61 @@ CUSTOM_CSS = """
     .empty-state strong {
         color: #374151;
         font-weight: 600;
+    }
+
+    .management-panel {
+        border: 1px solid #d5e8d5;
+        border-left: 5px solid #3d6b4f;
+        border-radius: 10px;
+        padding: 1.25rem 1.35rem;
+        background: linear-gradient(135deg, #f8fcf8 0%, #f2f8f2 100%);
+        margin-top: 1rem;
+        animation: riseIn 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .management-panel h3 {
+        font-family: 'Source Serif 4', Georgia, serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #152515;
+        margin: 0 0 0.55rem 0;
+    }
+    .management-panel p {
+        margin: 0;
+        color: #374151;
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+    .user-badge {
+        display: inline-block;
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #2d5a3d;
+        background: rgba(61, 107, 79, 0.12);
+        border-radius: 999px;
+        padding: 0.25rem 0.65rem;
+        margin-bottom: 0.65rem;
+    }
+
+    .app-role-banner {
+        border-radius: 10px;
+        padding: 0.75rem 1rem;
+        margin-bottom: 1.25rem;
+        font-size: 0.92rem;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        animation: riseIn 0.45s ease-out;
+    }
+    .app-role-banner.user {
+        background: linear-gradient(135deg, #ecfdf3 0%, #d1fae5 100%);
+        border: 1px solid #a7d7b8;
+        color: #14532d;
+    }
+    .app-role-banner.admin {
+        background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+        border: 1px solid #c7d2fe;
+        color: #312e81;
     }
 
     .prob-row {
@@ -262,9 +323,19 @@ CUSTOM_CSS = """
     }
 
     div[data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #f8faf8 0%, #f3f6f3 100%);
-        border-right: 1px solid #e2e9e2;
-        box-shadow: 2px 0 16px rgba(21, 37, 21, 0.04);
+        background: linear-gradient(180deg, #eef6ef 0%, #e4f0e6 100%);
+        border-right: 1px solid #c5dfc9;
+        box-shadow: 2px 0 20px rgba(45, 90, 61, 0.08);
+        position: relative;
+    }
+    div[data-testid="stSidebar"]::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: linear-gradient(180deg, #2d6a4f 0%, #3d6b4f 50%, #52b788 100%);
     }
 
     div[data-testid="stSidebar"] .stRadio > div {
@@ -369,14 +440,41 @@ CUSTOM_CSS = """
     #MainMenu { visibility: hidden; }
     footer { visibility: hidden; }
     header[data-testid="stHeader"] {
-        background: rgba(255, 255, 255, 0.92);
+        background: linear-gradient(90deg, rgba(238, 246, 239, 0.96) 0%, rgba(255, 255, 255, 0.94) 100%);
         backdrop-filter: blur(8px);
-        border-bottom: 1px solid #e5ebe5;
-        box-shadow: 0 1px 6px rgba(21, 37, 21, 0.04);
+        border-bottom: 2px solid #c5dfc9;
+        box-shadow: 0 2px 10px rgba(45, 90, 61, 0.06);
+    }
+
+    .stButton > button[kind="primary"],
+    .stButton > button[data-testid="baseButton-primary"] {
+        background: linear-gradient(135deg, #3d6b4f 0%, #2d5a3d 100%) !important;
+        border-color: #2d5a3d !important;
+        color: #ffffff !important;
+    }
+    .stButton > button[kind="primary"]:hover,
+    .stButton > button[data-testid="baseButton-primary"]:hover {
+        background: linear-gradient(135deg, #4a7c59 0%, #3d6b4f 100%) !important;
+        box-shadow: 0 4px 14px rgba(61, 107, 79, 0.35) !important;
     }
 
     .stApp {
-        background: #f3f6f3;
+        background:
+            radial-gradient(ellipse at 0% 0%, rgba(82, 183, 136, 0.12) 0%, transparent 50%),
+            radial-gradient(ellipse at 100% 100%, rgba(45, 106, 79, 0.08) 0%, transparent 45%),
+            linear-gradient(180deg, #eef6ef 0%, #f5faf5 40%, #edf4ee 100%);
+    }
+    section.main {
+        background: transparent;
+    }
+    section.main::before {
+        content: '';
+        display: block;
+        height: 3px;
+        margin: -0.5rem 0 1.25rem 0;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #2d6a4f, #52b788, #3d6b4f);
+        opacity: 0.85;
     }
 </style>
 """
