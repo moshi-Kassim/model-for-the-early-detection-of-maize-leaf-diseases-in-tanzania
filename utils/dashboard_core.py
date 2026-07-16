@@ -32,7 +32,8 @@ def resolve_model_path() -> Path:
 @st.cache_resource(show_spinner=False)
 def autoload_model():
     model_path = resolve_model_path()
-    model = load_model(str(model_path))
+    # Model was saved with Keras 3 (TF 2.16+). TF 2.15 cannot load batch_shape InputLayer.
+    model = load_model(str(model_path), compile=False, safe_mode=False)
     return model, str(model_path)
 
 
