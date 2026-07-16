@@ -138,7 +138,7 @@ def page_user_diagnosis():
             """
             <div class="empty-state">
                 <p><strong>No user uploads yet</strong></p>
-                <p>Upload maize leaf images on the User Dashboard (port 8501).
+                <p>Upload maize leaf images on the User Dashboard.
                 The images and full diagnoses will appear here automatically.</p>
             </div>
             """,
@@ -323,13 +323,9 @@ def page_about():
     st.markdown("""
     ### Dashboards
     - **User Dashboard** (`user_app.py`) — farmers upload a leaf and see management advice
-    - **Admin Dashboard** (`app.py`) — **User Diagnosis** shows the latest user upload with full results
+    - **Admin Dashboard** (`app.py`) — **User Diagnosis** shows the latest user upload with full results """)
+    
 
-    ### Panel demonstration
-    - Upload on the **User Dashboard** (8501), then show detailed results on **User Diagnosis** in Admin (8502)
-    - Use **live image upload** during presentation (phone or laptop photo)
-    - Sample images in `assets/sample_images/` are for developer testing only and are not shown in the dashboard
-    """)
 
 
 def main():
