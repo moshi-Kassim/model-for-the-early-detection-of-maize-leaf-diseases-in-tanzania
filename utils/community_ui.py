@@ -7,7 +7,15 @@ from pathlib import Path
 import streamlit as st
 from PIL import Image
 
-from utils.community import add_reply, create_post, delete_post, delete_reply, list_posts, list_replies
+from utils.community import (
+    add_reply,
+    create_post,
+    delete_post,
+    delete_reply,
+    list_posts,
+    list_replies,
+    resolve_image_path,
+)
 from utils.translations import t
 
 COMMUNITY_CSS = """
@@ -187,8 +195,8 @@ def render_post_card(post: dict, lang: str, *, key_prefix: str, admin_view: bool
 
     col_img, col_body = st.columns([1, 2], gap="medium")
     with col_img:
-        image_path = Path(post["image_path"])
-        if image_path.exists():
+        image_path = resolve_image_path(post.get("image_path", ""))
+        if image_path:
             st.image(str(image_path), use_container_width=True)
 
     with col_body:
@@ -280,6 +288,9 @@ def render_community_page(lang: str, *, admin_view: bool = False) -> None:
     title = t("community_admin_title", lang) if admin_view else t("community_title", lang)
     subtitle = t("community_admin_subtitle", lang) if admin_view else t("community_subtitle", lang)
     render_page_header(title, subtitle)
+
+    if admin_view and st.button("Refresh", key="community_admin_refresh"):
+        st.rerun()
 
     posts = list_posts()
     if not posts:
